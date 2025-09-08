@@ -62,11 +62,12 @@
       description="You have not added any locations to your watch list. Please add a location to see the weather details."
     />
 
-    <div class="grid grid-cols-4 gap-6 mt-3">
+    <div class="grid grid-cols-3 gap-6 mt-3">
       <WeatherInfo
         v-for="(location, index) in watchlist"
         :key="index"
         v-bind="location"
+        class="col-span-1"
       />
     </div>
   </UContainer>
