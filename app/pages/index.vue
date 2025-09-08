@@ -1,19 +1,19 @@
 <template>
   <UContainer>
     <div class="flex items-center gap-3 h-14">
-      <UNavigationMenu color="neutral" :items="items" class="w-full" />
+      <app-header />
     </div>
 
     <UCard variant="subtle">
       <div class="h-auto py-3 flex items-center justify-center">
         <div class="space-y-6">
-          <div class="flex items-center gap-3 block">
+          <div class="grid grid-cols-4 gap-3 block">
             <UInputMenu
               v-model="form.country"
               :items="countries"
               valueKey="value" 
               placeholder="Select Country"
-              class="min-w-[200px]"
+              class="min-w-[200px] col-span-4 lg:col-span-1"
             />
             <UInputMenu
               v-model="form.state"
@@ -21,7 +21,7 @@
               :items="states"
               valueKey="value" 
               placeholder="Select State"
-              class="min-w-[200px]"
+              class="min-w-[200px] col-span-4 lg:col-span-1"
             />
             <UInputMenu
               v-model="form.city"
@@ -29,17 +29,20 @@
               :items="cities"
               valueKey="value" 
               placeholder="Select City"
-              class="min-w-[200px]"
+              class="min-w-[200px] col-span-4 lg:col-span-1"
             />
-            <UButton
-              :disabled="
-                !form.country || !form.state || !form.city
-              "
-              color="primary"
-              @click="onSubmit"
-            >
-              Add to watch list
-            </UButton>
+            <div class="col-span-4 lg:col-span-1">
+              <UButton
+                :disabled="
+                  !form.country || !form.state || !form.city
+                "
+                color="primary"
+                block
+                @click="onSubmit"
+              >
+                Add to watch list
+              </UButton>
+            </div>
           </div>
 
           <p class="text-center text-sm text-neutral-500 w-full max-w-md mx-auto">
@@ -67,38 +70,15 @@
         v-for="(location, index) in watchlist"
         :key="index"
         v-bind="location"
-        class="col-span-1"
+        class="col-span-3 lg:col-span-1"
       />
     </div>
   </UContainer>
 </template>
 
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
 import { useStorage } from '@vueuse/core'
 import { Country, State, City }  from 'country-state-city';
-
-const items = ref<NavigationMenuItem[][]>([
-  [
-    {
-      label: 'Weather Application',
-      to: '/'
-    }
-  ],
-  [
-    {
-      label: 'About',
-      to: '/about',
-      target: '_blank'
-    },
-    {
-      label: 'GitHub',
-      icon: 'i-simple-icons-github',
-      to: 'https://github.com/saikksub',
-      target: '_blank'
-    }
-  ]
-])
 
 const watchlist = useStorage<{
   flag: string;
